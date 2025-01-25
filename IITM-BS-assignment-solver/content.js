@@ -3,7 +3,6 @@ function wait(ms) {
 }
 
 async function completeAssignment() {
-    console.log('Running content script...v2');
     const clickButton = (selector) => {
         const button = document.querySelector(selector);
         if (button) button.click();
