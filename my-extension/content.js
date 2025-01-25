@@ -31,7 +31,12 @@ async function completeAssignment() {
                         answerValue = answerValue.replace('(Type: String)', '').trim();
                     } else if (answerValue.startsWith('(Type: Numeric)')) {
                         answerValue = Number(answerValue.replace('(Type: Numeric)', '').trim());
+                    } else if (answerValue.startsWith('(Type: Range)')) {
+                        const range = answerValue.replace('(Type: Range)', '').trim();
+                        const [min, max] = range.split(',').map(Number);
+                        answerValue = min;
                     }
+
                     const inputField = qtResponseDiv.querySelector('input');
                     if (inputField) inputField.value = answerValue;
                 }
