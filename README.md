@@ -1,48 +1,56 @@
-# IITM-BS-Practice-Assignment-Completer  
+# IITM BS Practice Assignment Completer
 
-This Chrome/Edge extension simplifies the process of completing practice assignments with a single click. By automating the solution process, it saves you time and effort.  
+A one-click Edge/Chrome extension for the IITM BS portal (`seek.onlinedegree.iitm.ac.in`). It fills in and submits every unsolved **practice** assignment in a course, using the answers the portal shows in **Review**. Graded and single-submission assignments are skipped, and no data is collected.
 
-## Features  
+## Install
 
-- **One-Click Solution:** Completes entire practice assignments in seconds.  
-- **User-Friendly:** Easy to install and use, with just two clicks required.  
+1. Clone this repository, or use **Code > Download ZIP** and unzip it.
+2. Open `edge://extensions` or `chrome://extensions` and turn on **Developer mode**.
+3. Click **Load unpacked** and choose the `IITM-BS-assignment-solver` folder.
+4. Click the puzzle piece in the toolbar and pin the extension (eye icon in Edge, pin in Chrome).
 
-## How to Install  
+To update, replace the files, click reload on the extension, and refresh the course page.
 
-1. Clone/[Download](https://github.com/parthbansal05/IITM-BS-Practice-Assignment-Completer/releases) the extension files to your computer.
-2. Open Chrome or Edge and navigate to `chrome://extensions` (or `edge://extensions` for Edge).  
-3. Enable **Developer Mode** by toggling the switch in the top-right corner.  
-4. Click on **Load unpacked** and select the folder containing the extension files.  
-5. The extension will now be installed and visible in the extensions bar.  
+## Use
 
-## How to Use  
+1. Log in and open a course's content page (the one listing the weeks).
+2. Click the icon and keep the tab visible, because browsers slow down hidden tabs. Click again to stop after the current assignment.
+3. When the page refreshes, verify your answers. Anything skipped is listed with the reason.
 
-1. Open the practice assignment page in your browser.  
-2. Click on the extension icon in the extensions bar.  
-3. Click the **Solve** button.  
-4. The extension will complete the entire assignment within seconds.  
+## How it works
 
-## Note  
+The portal reveals answers only after a submission, so each assignment not marked completed or closed goes through:
 
-- Ensure that the practice assignment page is fully loaded before using the extension.  
-- This extension is designed for educational purposes. Use it responsibly.  
+1. **Check:** the start page must say `Mode: Practice` and `Multiple submissions allowed`.
+2. **Reveal:** submit a placeholder attempt, unless one is already submitted.
+3. **Read:** collect the correct answers from **Review**, matched by question and option text, so reordering is fine.
+4. **Retake:** clear that attempt, fill in the answers and submit.
 
-## Collaboration  
+It waits for pages to load and autosave to finish, and tries a submission that does not stick up to 3 times. Unexpected errors stop the whole run.
 
-This project is open for collaboration. You can:  
+| File | Job |
+| --- | --- |
+| `manifest.json` | Manifest V3 settings (`activeTab` and `scripting` permissions) |
+| `background.js` | Runs the solver when the icon is clicked |
+| `solver.js` | Finds, reads, fills in and submits assignments |
+| `toast.js` | Shows on-page messages, including after the refresh |
 
-- **Fork the repository** to add your own features and contribute to the project.  
-- **Clone the repository** to explore and test the code locally.  
-- **Download the latest release** from the [Releases](https://github.com/parthbansal05/IITM-BS-Practice-Assignment-Completer/releases) section for easy installation.  
+Settings at the top of `solver.js`: `TEST_MODE = true` does one assignment slowly and stops before its last submission (a placeholder may still be submitted); `STEP_DELAY` sets the speed.
 
-Pull requests are welcome! Let's collaborate and make this project even better.  
+## Troubleshooting
 
-## ⭐ Support This Project  
+| Message | Meaning |
+| --- | --- |
+| `!` on the icon | Open the portal first. |
+| "Open a course's content page first" | The list of weeks was not found. |
+| "fill question ... yourself and submit" | That answer could not be worked out. The rest is filled in. |
+| "different page layout, or did not load" | Not supported, or too slow to load. Skipped. |
+| "Stopped here" | Something unexpected happened. Check the assignment named. |
 
-If you find this project helpful:  
+## Limits
 
-- **Star this repository** to show your support!  
-- **Share it** with others who might benefit from it.  
-- **Fork and contribute** to add more value to the project.  
+- The placeholder is a real submission, and a retake clears your previous attempt.
+- Programming assignments, the portal's older layout and regex answers are not filled in.
+- Portal updates can break it. Issues and pull requests are welcome.
 
-Your support and contributions motivate me to improve and expand this extension further.  
+Use it responsibly and check your course's rules first: practice assignments may count in some courses.
